@@ -1,11 +1,16 @@
+-- .config/nvim/lua/marko/plugins/colorscheme.lua
+
 return {
   "folke/tokyonight.nvim",
   priority = 1000,
   config = function()
-    local transparent = true -- set to true if you would like to enable transparency
+    -- local transparent = true -- set to true if you would like to enable transparency
+    local transparent = false -- set to true if you would like to enable transparency
 
-    local bg = "#011628"
-    local bg_dark = "#011423"
+    -- local bg = "#011628"
+    local bg = "#182b36"
+    -- local bg_dark = "#011423"
+    local bg_dark = "#182b33"
     local bg_highlight = "#143652"
     local bg_search = "#0A64AC"
     local bg_visual = "#275378"

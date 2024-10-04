@@ -1,16 +1,3 @@
--- return {
---   "github/copilot.vim",
---   lazy = false,
---   config = function()
---     -- Mapping tab is already used by NvChad
---     vim.g.copilot_no_tab_map = true -- Disable default Copilot tab mapping
---     vim.g.copilot_assume_mapped = true -- Assume the key mappings are set manually
---     vim.g.copilot_tab_fallback = "" -- No fallback action for the Tab key
---     -- The mapping is set to other key, see custom/lua/mappings
---     -- or run <leader>ch to see copilot mapping section
---   end,
--- }
-
 return {
   {
     "github/copilot.vim",
