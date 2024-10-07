@@ -64,3 +64,6 @@ vim.keymap.set(
   { desc = "Search and replace all the word that are like the one under cursor" }
 )
 vim.keymap.set("n", "<leader>re", [[:normal! ciw]], { desc = "Replace word under cursor" })
+
+-- codeium asistant
+keymap.set("n", "<leader>cc", "<cmd>Codeium Chat<CR>", { desc = "Codeium Assistant" }) -- open codeium assistant
