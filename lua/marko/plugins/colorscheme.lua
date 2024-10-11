@@ -18,6 +18,7 @@ return {
     local fg_dark = "#B4D0E9"
     local fg_gutter = "#627E97"
     local border = "#547998"
+    local float_windows = "#284657"
 
     require("tokyonight").setup({
       style = "storm",
@@ -29,7 +30,8 @@ return {
       on_colors = function(colors)
         colors.bg = bg
         colors.bg_dark = transparent and colors.none or bg_dark
-        colors.bg_float = transparent and colors.none or bg_dark
+        -- colors.bg_float = transparent and colors.none or bg_dark
+        colors.bg_float = transparent and colors.none or float_windows
         colors.bg_highlight = bg_highlight
         colors.bg_popup = bg_dark
         colors.bg_search = bg_search

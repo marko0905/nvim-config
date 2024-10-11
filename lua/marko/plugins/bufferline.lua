@@ -43,6 +43,6 @@ return {
     end
 
     -- Key mapping to close buffer and move to the next one using <leader>x
-    vim.keymap.set("n", "<leader>x", close_buffer_and_go_to_next, { desc = "Close current buffer and go to the next" })
+    vim.keymap.set("n", "<leader>cb", close_buffer_and_go_to_next, { desc = "Close current buffer and go to the next" })
   end,
 }
