@@ -20,16 +20,6 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab ]]
 
--- terminal
-keymap.set("n", "<leader>tv", function()
-  vim.cmd("vsplit | terminal") -- Open terminal in a vertical split
-  vim.api.nvim_command("startinsert") -- Automatically enter insert mode
-end, { desc = "Open terminal verticaly" }) -- open terminal
-keymap.set("n", "<leader>th", function()
-  vim.cmd("split | terminal") -- Open terminal in a horizontal split
-  vim.api.nvim_command("startinsert") -- Automatically enter insert mode
-end, { desc = "Open terminal horizontaly" }) -- open terminal
-
 -- split movement
 keymap.set("n", "<C-M-h>", "<C-w>h", { desc = "Move to left buffer" }) -- move to left split
 keymap.set("n", "<C-M-left>", "<C-w>h", { desc = "Move to left buffer" }) -- move to left split with arrow key
