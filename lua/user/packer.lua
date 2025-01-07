@@ -135,29 +135,6 @@ return require('packer').startup(function(use)
   }
   -- Codeium plugin --Out
 
-  -- Copilot plugin --In
-  use {
-    'zbirenbaum/copilot.lua',
-    event = { "VimEnter" },
-    config = function()
-      vim.defer_fn(function()
-        require("copilot").setup({
-          suggestion = { enabled = false },
-          panel = { enabled = false },
-        })
-      end, 100)
-    end,
-  }
-
-  use {
-    'zbirenbaum/copilot-cmp',
-    after = { "copilot.lua" },
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  }
-
-  -- Copilot plugin --Out
 
 
 end)
