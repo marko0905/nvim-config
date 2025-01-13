@@ -24,10 +24,11 @@ wk.add({
     { "<leader>bb", "<cmd>enew<cr>", desc = "New Buffer", mode = "n" },
   
     --Packer
-    {"<leader>p", group = "Packages Managment",},
-    {"<leader>pp", "<cmd>so<cr>", desc = "Source Config", mode = "n"},
-    {"<leader>ps", "<cmd>PackerSync<cr>", desc = "Packer Sync", mode = "n"},
-    {"<leader>pu", "<cmd>PackerUpdate<cr>", desc = "Packer Update", mode = "n"},
+    {"<leader>p", group = "Package Management",},
+    {"<leader>ps", "<cmd>Lazy sync<cr>", desc = "Lazy Sync", mode = "n"},
+    {"<leader>pi", "<cmd>Lazy install<cr>", desc = "Lazy Install", mode = "n"},
+    {"<leader>pu", "<cmd>Lazy update<cr>", desc = "Lazy Update", mode = "n"},
+    {"<leader>pp", "<cmd>Lazy profile<cr>", desc = "Lazy Profile", mode = "n"},
     
     --nvim-tree
     { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Tree", mode = "n" },

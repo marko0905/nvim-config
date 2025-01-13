@@ -1,6 +1,7 @@
 -- File: after/plugin/line_numbers.lua
 
-require("user.remap")
+require("user/lazy")
+require("user/remap")
 
 -- Enable line numbers
 vim.o.number = true -- Absolute line numbers
