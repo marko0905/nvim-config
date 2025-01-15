@@ -1,6 +1,8 @@
--- File: after/plugin/line_numbers.lua
-
+-- nvim/init.lua
+-- init.lua
+-- Load lazy first
 require("user/lazy")
+-- Then load your remaps
 require("user/remap")
 
 -- Enable line numbers

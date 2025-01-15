@@ -13,53 +13,9 @@ local function get_tree_win()
   return nil
 end
 
--- Navigate to the previous buffer or NvimTree
-vim.keymap.set('n', '<C-h>', function()
-  local tree_win = get_tree_win() -- Check if NvimTree is open
-  local current_buf = vim.api.nvim_get_current_buf() -- Get the current buffer ID
-  local buffers = vim.fn.getbufinfo({ buflisted = true }) -- Get all listed buffers
-
-  if tree_win and vim.api.nvim_get_current_win() == tree_win then
-    vim.api.nvim_set_current_buf(buffers[#buffers].bufnr) -- Go to the last buffer
-  else
-    local prev_buf = nil
-    for i, buf in ipairs(buffers) do
-      if buf.bufnr == current_buf then
-        prev_buf = buffers[i - 1] and buffers[i - 1].bufnr or nil
-        break
-      end
-    end
-    if prev_buf then
-      vim.api.nvim_set_current_buf(prev_buf) -- Switch to the previous buffer
-    elseif tree_win then
-      vim.api.nvim_set_current_win(tree_win) -- Switch to the NvimTree
-    end
-  end
-end, { desc = "Previous buffer or NvimTree" })
-
--- Navigate to the next buffer or NvimTree
-vim.keymap.set('n', '<C-l>', function()
-  local tree_win = get_tree_win() -- Check if NvimTree is open
-  local current_buf = vim.api.nvim_get_current_buf() -- Get the current buffer ID
-  local buffers = vim.fn.getbufinfo({ buflisted = true }) -- Get all listed buffers
-
-  if tree_win and vim.api.nvim_get_current_win() == tree_win then
-    vim.api.nvim_set_current_buf(buffers[1].bufnr) -- Go to the first buffer
-  else
-    local next_buf = nil
-    for i, buf in ipairs(buffers) do
-      if buf.bufnr == current_buf then
-        next_buf = buffers[i + 1] and buffers[i + 1].bufnr or nil
-        break
-      end
-    end
-    if next_buf then
-      vim.api.nvim_set_current_buf(next_buf) -- Switch to the next buffer
-    elseif tree_win then
-      vim.api.nvim_set_current_win(tree_win) -- Switch to the NvimTree
-    end
-  end
-end, { desc = "Next buffer or NvimTree" })
+-- Simple buffer navigation
+vim.keymap.set('n', '<C-h>', ':bprevious<CR>', { silent = true, desc = "Previous buffer" })
+vim.keymap.set('n', '<C-l>', ':bnext<CR>', { silent = true, desc = "Next buffer" })
 
 -- Vertical window navigation
 vim.keymap.set('n', '<C-j>', function()

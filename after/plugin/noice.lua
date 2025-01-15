@@ -1,3 +1,25 @@
+-- nvim/after/plugin/noice.lua
+-- noice.lua
+
+-- Configure notify first
+require("notify").setup({
+  background_colour = "#000000",
+  render = "default",
+  stages = "fade",
+  timeout = 3000,
+  minimum_width = 50,
+  icons = {
+    ERROR = "",
+    WARN = "",
+    INFO = "",
+    DEBUG = "",
+    TRACE = "✎",
+  },
+})
+
+-- Set as the default notify handler
+vim.notify = require("notify")
+
 require("noice").setup({
   cmdline = {
     enabled = true,

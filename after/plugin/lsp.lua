@@ -1,71 +1,126 @@
+-- nvim/after/plugin/lsp.lua
 -- File: lsp.lua
 local lspconfig = require('lspconfig')
 
--- TypeScript and JavaScript (using ts_ls)
-lspconfig.ts_ls.setup {
-  capabilities = require('cmp_nvim_lsp').default_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  ),
-}
+-- Create shared capabilities
+local capabilities = require('cmp_nvim_lsp').default_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
 
--- Lua
-lspconfig.lua_ls.setup {
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT', -- Use LuaJIT for Neovim
-      },
-      diagnostics = {
-        globals = { 'vim' }, -- Recognize `vim` as a global variable
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true), -- Neovim runtime files
-        checkThirdParty = false, -- Disable telemetry prompt
-      },
-      telemetry = {
-        enable = false,
+-- Define servers with their specific settings
+local servers = {
+  -- Go
+  gopls = {
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+        gofumpt = true,
       },
     },
   },
+
+  -- Nix
+  nil_ls = {
+    settings = {
+      ['nil'] = {
+        formatting = {
+          command = { "nixpkgs-fmt" },
+        },
+      },
+    },
+  },
+
+  -- TypeScript and JavaScript
+  ts_ls = {},
+  
+  -- Lua
+  lua_ls = {
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+        },
+        diagnostics = {
+          globals = { 'vim' },
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+          checkThirdParty = false,
+        },
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  },
+  
+  -- JSON
+  jsonls = {},
+  
+  -- ESLint
+  eslint = {},
+  
+  -- HTML
+  html = {},
+  
+  -- CSS
+  cssls = {},
 }
 
--- Node.js JSON Support
-lspconfig.jsonls.setup {}
-
--- Node.js ESLint
-lspconfig.eslint.setup {}
-
--- HTML
-lspconfig.html.setup {
-  capabilities = require('cmp_nvim_lsp').default_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  ),
-}
-
--- CSS
-lspconfig.cssls.setup {
-  capabilities = require('cmp_nvim_lsp').default_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  ),
-}
+-- Setup each LSP server with consistent capabilities
+for server, config in pairs(servers) do
+  -- Merge server-specific settings with shared capabilities
+  config.capabilities = capabilities
+  
+  -- Setup the server
+  lspconfig[server].setup(config)
+end
 
 -- Configure diagnostics globally
 vim.diagnostic.config({
   virtual_text = {
-    prefix = "", -- Icon or text to show before the message
-    spacing = 2, -- Space between the line and diagnostic message
-    source = "always", -- Show the diagnostic source (e.g., "eslint", "lua-ls")
-    severity = nil, -- Only show diagnostics of certain severities (nil shows all)
+    prefix = "",
+    spacing = 2,
+    source = "always",
+    severity = nil,
     format = function(diagnostic)
       return string.format("%s [%s]", diagnostic.message, diagnostic.source)
     end,
   },
-  signs = true, -- Show signs in the sign column
-  underline = true, -- Underline the problem
-  update_in_insert = false, -- Update diagnostics in insert mode
-  severity_sort = true, -- Sort diagnostics by severity
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
   float = {
-    border = "rounded", -- Rounded border for floating diagnostics
-    source = "always", -- Show the source of the diagnostic in the float
+    border = "rounded",
+    source = "always",
   },
+})
+
+-- LSP Keybindings with which-key integration
+local wk = require("which-key")
+
+wk.add({
+  {
+    mode = { "n" },
+    { "<leader>l", group = "LSP Commands" },
+    { "<leader>ld", vim.lsp.buf.definition, desc = "Go to Definition" },
+    { "<leader>lD", vim.lsp.buf.declaration, desc = "Go to Declaration" },
+    { "<leader>lr", vim.lsp.buf.references, desc = "Find References" },
+    { "<leader>li", vim.lsp.buf.implementation, desc = "Go to Implementation" },
+    { "<leader>lt", vim.lsp.buf.type_definition, desc = "Type Definition" },
+    { "<leader>lk", vim.lsp.buf.hover, desc = "Hover Documentation" },
+    { "<leader>ls", vim.lsp.buf.signature_help, desc = "Signature Help" },
+    { "<leader>ln", vim.lsp.buf.rename, desc = "Rename Symbol" },
+    { "<leader>la", vim.lsp.buf.code_action, desc = "Code Actions" },
+    { "<leader>lf", vim.lsp.buf.format, desc = "Format Document" },
+    { "<leader>le", vim.diagnostic.open_float, desc = "Show Line Diagnostics" },
+    { "<leader>lq", vim.diagnostic.setloclist, desc = "Set Location List" },
+    { "<leader>lw", vim.diagnostic.setqflist, desc = "Set Quickfix List" },
+    { "[d", vim.diagnostic.goto_prev, desc = "Previous Diagnostic" },
+    { "]d", vim.diagnostic.goto_next, desc = "Next Diagnostic" },
+  }
 })
